@@ -67,7 +67,7 @@ export default class Index extends Component {
     const element = e.target;
     element.className = 'update now';
 
-    let { repositories } = this.state;
+    const { repositories } = this.state;
     try {
       const { data: response } = await api.get(`repos/${fullName}`);
       response.lestCommit = moment(response.pushed_at).fromNow();
