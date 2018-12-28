@@ -67,16 +67,14 @@ export default class Index extends Component {
     const element = e.target;
     element.className = 'update now';
 
-    const { repositories } = this.state;
+    let { repositories } = this.state;
     try {
       const { data: response } = await api.get(`repos/${fullName}`);
       response.lestCommit = moment(response.pushed_at).fromNow();
 
-      const fnd = repositories.filter((rep) => {
-        if (rep.id === response.id) return response;
-        return rep;
-      });
-      const repo = [...fnd];
+      const fnd = repositories.findIndex(rep => rep.id === response.id);
+      repositories[fnd] = response;
+      const repo = [...repositories];
       localStorage.setItem('repositories', JSON.stringify(repo));
       this.setState({
         repositories: repo,
