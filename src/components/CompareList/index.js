@@ -4,7 +4,7 @@ import { Container, Repository } from './styles';
 
 
 const Index = (props) => {
-  const { repositories } = props;
+  const { repositories, rmRepository, updtRepository } = props;
   return (
     <Container>
       {
@@ -17,22 +17,40 @@ const Index = (props) => {
           </header>
           <ul>
             <li>
+              <i className="fa fa-star" />
               {a.stargazers_count}
               <small>starts</small>
             </li>
             <li>
+              <i className="fa fa-code-fork" />
               {a.forks_count}
               <small>forks</small>
             </li>
             <li>
+              <i className="fa fa-warning" />
               {a.open_issues_count}
               <small>issues</small>
             </li>
             <li>
+              <i className="fa fa-clock-o" />
               {a.lestCommit}
               <small>last commit</small>
             </li>
           </ul>
+          <form>
+            <button type="button" className="update" onClick={e => updtRepository(e, a.full_name)}>
+atualizar
+              <i
+                className="fa fa-spinner fa-pulse"
+              />
+            </button>
+            <button type="button" className="delete" onClick={e => rmRepository(e, a.id)}>
+              excluir
+              <i
+                className="fa fa-spinner fa-pulse"
+              />
+            </button>
+          </form>
         </Repository>
       ))
     }
@@ -60,5 +78,7 @@ Index.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ),
+  rmRepository: PropTypes.func.isRequired,
+  updtRepository: PropTypes.func.isRequired,
 };
 export default Index;
