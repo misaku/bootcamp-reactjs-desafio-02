@@ -71,8 +71,12 @@ export default class Index extends Component {
     try {
       const { data: response } = await api.get(`repos/${fullName}`);
       response.lestCommit = moment(response.pushed_at).fromNow();
-      const fnd = repositories.filter(rep => rep.id !== response.id);
-      const repo = [...fnd, response];
+
+      const fnd = repositories.filter((rep) => {
+        if (rep.id === response.id) return response;
+        return rep;
+      });
+      const repo = [...fnd];
       localStorage.setItem('repositories', JSON.stringify(repo));
       this.setState({
         repositories: repo,
